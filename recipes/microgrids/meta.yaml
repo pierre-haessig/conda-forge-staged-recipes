@@ -1,0 +1,57 @@
+# Conda-forge recipe for Microgrids.py. PH 2024
+{% set name = "microgrids" %}
+{% set version = "0.3.1" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 6f785429e93694504b27cf374c488bbc80c121d2cb5ac335dd7482f27589c124
+
+build:
+  noarch: python
+  skip: True  # [py<3.10]
+  script: {{ PYTHON }} -m pip install . -vv
+  number: 0
+
+requirements:
+  host:
+    - python
+    - pip
+  run:
+    - python
+
+test:
+  # Some packages might need a `test/commands` key to check CLI.
+  # List all the packages/modules that `run_test.py` imports.
+  imports:
+    - simplejson
+    - simplejson.tests
+  # For python packages, it is useful to run pip check. However, sometimes the
+  # metadata used by pip is out of date. Thus this section is optional if it is
+  # failing.
+  requires:
+    - pip
+  commands:
+    - pip check
+
+about:
+  home: https://github.com/simplejson/simplejson
+  summary: 'Simple, fast, extensible JSON encoder/decoder for Python'
+  description: |
+    simplejson is a simple, fast, complete, correct and extensible
+    JSON <https://json.org> encoder and decoder for Python 2.5+ and
+    Python 3.3+. It is pure Python code with no dependencies, but includes
+    an optional C extension for a serious speed boost.
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE.md
+  # The doc_url and dev_url are optional.
+  #doc_url: https://simplejson.readthedocs.io/
+  #dev_url: https://github.com/simplejson/simplejson
+
+extra:
+  recipe-maintainers:
+    - pierre-haessig
